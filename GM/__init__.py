@@ -396,18 +396,25 @@ _internal_surfaces = []
 def surface_exists() :
 	pass
 
-#
+# Creates a surface of the indicated width and height.
+# Returns the id of the surface, which must be used in all further calls.
+# Note that the surface will not be cleared. 
 def surface_create( size=(128,128) ) :
-	global _internal_surfaces
-	
-	surface = pygame.Surface( size, pygame.SRCALPHA )
-	_internal_surfaces.append( surface )
-	
-	return surface
+	return surface_create_ext( size, color=None, mode=pygame.SRCALPHA )
 
 #
-def surface_create_ext() :
-	pass
+def surface_create_ext( size=(128,128), color=None, mode=pygame.SRCALPHA ) :
+	global _internal_surfaces
+	
+	surface = pygame.Surface( size, mode )
+	_internal_surfaces.append( surface )
+	
+	if color != None :
+		surface_set_target( surface )
+		draw_clear( color )
+		surface_reset_target()
+	
+	return surface
 
 #
 def surface_resize() :
@@ -423,6 +430,14 @@ def surface_set_target( surface=None ) :
 	_draw_surface_currentSurface = surface
 	
 
+
+# Resets the drawing target to the normal screen.
+def surface_reset_target() :
+	global _internal_surfaces
+	global _draw_surface_currentSurface
+	
+	_draw_surface_currentSurface = _internal_surfaces[0]
+	
 
 #----- Lighting -----
 #----- Particles -----
