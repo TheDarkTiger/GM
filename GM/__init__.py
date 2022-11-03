@@ -6,6 +6,7 @@
 # 2022
 
 import random
+import os.path
 import pygame
 import pygame.freetype
 
@@ -28,10 +29,20 @@ _internal_fonts = []
 def font_add( name=None, size=16, bold=False, italic=False, first=32, last=128 ) :
 	global _internal_fonts
 	
+	# Size sanity check
+	size = int( size )
 	if size < 1 : size = 1
 	
+	# Font file check
 	if name != None :
-		font = pygame.freetype.Font( name, size )
+		if not os.path.exists( name ) :
+			print( f"Can't find file '{name}', fall back to default font." )
+			name = None
+	
+	# Load it
+	if name != None :
+		# font = pygame.freetype.Font( name, size )
+		font = pygame.font.Font( name, size )
 	else :
 		font = pygame.font.SysFont( None, size )
 	
