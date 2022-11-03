@@ -333,6 +333,7 @@ def draw_text_color( coords=(0,0), string="Text", colors=( c_black, c_black, c_w
 		string = str( string )
 	
 	if isinstance( colors, tuple ) or isinstance( colors, list ) :
+		#TODO Better check. Use sanitize_color()
 		if len( colors ) == 3 :
 			c = colors
 			colors = (c,c,c,c)
