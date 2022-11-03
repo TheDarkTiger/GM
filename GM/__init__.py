@@ -219,7 +219,9 @@ def draw_set_color( color=(0,0,0) ) :
 	_draw_color_currentColor = color
 
 #Non standard GM
-def draw_sanitize_color( color=0 ):
+def sanitize_color( color=None ):
+	
+	if color == None : color = 0
 	
 	# string families (Hex and HTML)
 	if isinstance( color, str ) :
@@ -232,7 +234,7 @@ def draw_sanitize_color( color=0 ):
 	
 	# multiple values
 	if isinstance( color, tuple ) or isinstance( color, list ) :
-		if len( color ) != 3 :
+		if len( color ) not in [3,4] :
 			color = (0,0,0)
 	
 	return color
